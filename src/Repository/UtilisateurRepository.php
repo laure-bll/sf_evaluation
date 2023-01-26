@@ -26,12 +26,6 @@ class UtilisateurRepository extends ServiceEntityRepository implements PasswordU
 
     public function save(Utilisateur $entity, bool $flush = false): void
     {
-        $users = $entity->findAll();
-        
-        if(!$users) {
-            $entity->setRoles(["ROLE_SUPER_ADMIN"]);
-        }
-
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {

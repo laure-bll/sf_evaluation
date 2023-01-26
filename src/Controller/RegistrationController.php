@@ -1,4 +1,4 @@
-<?php
+src/Controller/RegistrationController.php <?php
 
 namespace App\Controller;
 
@@ -24,6 +24,16 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupère tous les utilisateurs de la bdd.
+            $users = $entityManager->getRepository(Utilisateur::class)->findAll();
+            
+            // Le role du premier utilisateur créé sera automatiquement SUPER ADMIN.
+            if(count($users) == 0) {
+                $user->setRoles(["ROLE_SUPER_ADMIN"]);
+            } else {
+                $user->setRoles(["ROLE_USER"]);
+            }
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
