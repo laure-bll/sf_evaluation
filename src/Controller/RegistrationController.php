@@ -1,4 +1,4 @@
-src/Controller/RegistrationController.php <?php
+<?php
 
 namespace App\Controller;
 
