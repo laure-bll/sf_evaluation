@@ -4,11 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Form\ProduitType;
+use App\Entity\ContenuPanier;
+use App\Form\ContenuPanierType;
 use App\Repository\ProduitRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ContenuPanierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/produit')]
 class ProduitController extends AbstractController
@@ -40,11 +44,25 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    #[Route('/{id}', name: 'app_produit_show', methods: ['GET', 'POST'])]
+    public function show(Request $request, Produit $produit): Response
     {
+        $contenuPanier = new ContenuPanier();
+        $form = $this->createForm(ContenuPanierType::class, $contenuPanier);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            if($form->isValid()) {
+                return $this->forward('App\Controller\ContenuPanierController::new', [
+                    'produit' => $produit,
+                    'request' => $request
+                ]);
+            }
+        }
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'form_contenu_panier' => $form
         ]);
     }
 

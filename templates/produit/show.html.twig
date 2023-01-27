@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
+    {{ form(form_contenu_panier) }}
 
     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
 

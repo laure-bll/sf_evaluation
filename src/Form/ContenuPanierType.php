@@ -6,6 +6,7 @@ use App\Entity\ContenuPanier;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ContenuPanierType extends AbstractType
 {
@@ -13,9 +14,7 @@ class ContenuPanierType extends AbstractType
     {
         $builder
             ->add('quantite')
-            ->add('date')
-            ->add('produit')
-            ->add('panier')
+            ->add('submit', SubmitType::class)
         ;
     }
 

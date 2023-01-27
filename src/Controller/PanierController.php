@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use Datetime;
 use App\Entity\Panier;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/panier')]
 class PanierController extends AbstractController
@@ -29,6 +30,8 @@ class PanierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $panier->setUtilisateur($this->getUser());
+            $panier->setDateAchat(new Datetime());
             $panierRepository->save($panier, true);
 
             return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
