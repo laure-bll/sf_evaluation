@@ -36,11 +36,15 @@ class ProduitController extends AbstractController
 
             $photoFile = $form->get('photo')->getData();
 
+      
+
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
 
+
+                
                 try {
                     $photoFile->move(
                         $this->getParameter('photos_directory'),

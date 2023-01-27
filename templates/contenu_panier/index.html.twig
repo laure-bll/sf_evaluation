@@ -21,8 +21,9 @@
                 <td>{{ contenu_panier.quantite }}</td>
                 <td>{{ contenu_panier.date ? contenu_panier.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_contenu_panier_show', {'id': contenu_panier.id}) }}">show</a>
-                    <a href="{{ path('app_contenu_panier_edit', {'id': contenu_panier.id}) }}">edit</a>
+
+                    {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                    
                 </td>
             </tr>
         {% else %}

@@ -22,6 +22,9 @@
                 <p>In stock.</p>
                 <p class="quantity">QUANTITY : {{produit.stock}} </p>
             </div>
+
+
+
         </div>
         
         <div class="footer">
@@ -34,7 +37,8 @@
         </div>
     </div>
 
-    {{ form(form_contenu_panier) }}
+    
+    {{ include('contenu_panier/_form.html.twig', {form:form_contenu_panier})  }}
 
     <a href="{{ path('app_produit_index') }}">back to list</a>
 

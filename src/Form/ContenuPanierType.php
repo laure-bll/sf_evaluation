@@ -14,7 +14,6 @@ class ContenuPanierType extends AbstractType
     {
         $builder
             ->add('quantite')
-            ->add('submit', SubmitType::class)    
         ;
     }
 
