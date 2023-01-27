@@ -60,7 +60,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\OneToOne(mappedBy: 'Utilisateur', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'Utilisateur', cascade: ['persist', 'remove'])]
     private ?Panier $panier = null;
 
     public function getId(): ?int

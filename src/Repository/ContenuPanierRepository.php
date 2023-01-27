@@ -39,20 +39,20 @@ class ContenuPanierRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return ContenuPanier[] Returns an array of ContenuPanier objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return ContenuPanier[] Returns an array of ContenuPanier objects from Panier etat false
+    */
+   public function findByEtatFalse($user): array
+   {
+       return $this->createQueryBuilder('c')
+            ->leftJoin('c.panier', 'panier')
+            ->andWhere('panier.Utilisateur = :u')
+            ->setParameter('u', $user)
+            ->andWhere('panier.etat = false')
+            ->getQuery()
+            ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?ContenuPanier
 //    {

@@ -73,16 +73,24 @@ color: #000000;
 color: rgb(255, 255, 255);
 }
 
+.form-quantite form {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
 
-
+.form-quantite #contenu-panier {
+  display: flex;
+  flex-direction: row;
+}
 
 .product {
-height: 500px;
+height: 550px;
 width: 600px;
 background: rgb(255, 255, 255);
 position: relative;
 left: calc(50% - 300px);
-margin-top: calc(50vh - 250px);
+margin-top: 10%;
 }
 .header {
   height: 40px;

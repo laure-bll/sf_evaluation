@@ -14,7 +14,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-#[Route('/produit')]
 class ProduitController extends AbstractController
 {
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
@@ -25,7 +24,7 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
+    #[Route('/produit/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
     {
         $produit = new Produit();
@@ -36,23 +35,24 @@ class ProduitController extends AbstractController
 
             $photoFile = $form->get('photo')->getData();
 
-      
-
+            // Upload de la photo.
             if ($photoFile) {
+                // Renomme le fichier.
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
 
-
-                
                 try {
+                    // Stocke le fichier dans le dossier indiqué.
                     $photoFile->move(
                         $this->getParameter('photos_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) { //todo : addFlash
+                } catch (FileException $e) {
+                    $this->addFlash("danger", "An error occured during upload.");
                 }
 
+                // Sauvegarde le nom du fichier en base de donnée.
                 $produit->setPhoto($newFilename);
                 $produitRepository->save($produit, true);
             }
@@ -66,20 +66,19 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_show', methods: ['GET', 'POST'])]
+    #[Route('/produit/{id}', name: 'app_produit_show', methods: ['GET', 'POST'])]
     public function show(Request $request, Produit $produit): Response
     {
         $contenuPanier = new ContenuPanier();
         $form = $this->createForm(ContenuPanierType::class, $contenuPanier);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted()) {
-            if($form->isValid()) {
-                return $this->forward('App\Controller\ContenuPanierController::new', [
-                    'produit' => $produit,
-                    'request' => $request
-                ]);
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Crée ou modifie le contenu panier non payé et crée un nouveau panier si besoin.
+            return $this->forward('App\Controller\ContenuPanierController::new', [
+                'produit' => $produit,
+                'request' => $request
+            ]);
         }
 
         return $this->render('produit/show.html.twig', [
@@ -89,7 +88,7 @@ class ProduitController extends AbstractController
     }
 
 
-    #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
+    #[Route('/produit/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
@@ -107,9 +106,11 @@ class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
+    #[Route('/produit/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
     {
+        // todo : supprimer l'image des fichiers
+
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
             $produitRepository->remove($produit, true);
         }

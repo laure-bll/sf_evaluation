@@ -18,7 +18,7 @@ class Panier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'panier', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'panier', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Utilisateur = null;
 

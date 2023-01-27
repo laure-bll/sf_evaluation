@@ -12,9 +12,7 @@ class ContenuPanierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('quantite')
-        ;
+        $builder->add('quantite');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

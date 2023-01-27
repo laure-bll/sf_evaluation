@@ -37,6 +37,9 @@ nav{
     font-weight:bold;
     letter-spacing: 4px;
 }
+.logo:hover {
+    text-decoration: none;
+}
 .logo span{
     color:rgb(169, 185, 185);
 }

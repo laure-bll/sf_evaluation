@@ -5,34 +5,52 @@
 {% block body %}
 
  <link rel="stylesheet" href="{{ asset('/css/style1.css') }}">
-    <h1>Shop our products</h1>
+    <h1 class="text text-center">Shop our products</h1>
+    <div>
+        {% if is_granted("ROLE_ADMIN") %}
+            <p class="text-center">
+                <a class="btn btn-link" href="{{ path('app_produit_new') }}">Créer un nouveau produit</a>
+            </p>
+        {% endif %}
+    </div>
 
+    <table>
         <tbody>
             <div class="product-container">
-            {% for produit in produits %}
-
-                <div class="product-card">
-                    <img class="w-25" src="{{ asset('uploads/photos/' ~ produit.photo) }}" alt="Product Name" class="product-image"/>
-                    <h3 class="product-name">{{ produit.nom }}</h3>
-                    <p class="product-description">{{ produit.description }}</p>
-                    <div class="product-price">
-                        <span class="discount-price">{{ produit.prix }}</span>
-                        <p class="product-description">{{ produit.stock }}</p>
-                    </div>
-                    <button class="add-to-cart-button">Add to Cart</button>
-                </div>     
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            {% else %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
-            {% endfor %}
+                {% for produit in produits %}
+                    <td>
+                        <div class="product-card img-rounded">
+                            <img class="w-25 img-thumbnail img-responsive pre-scrollable" src="{{ asset('uploads/photos/' ~ produit.photo) }}" alt="Product Name" class="product-image"/>
+                            <h3 class="product-name">{{ produit.nom }}</h3>
+                            <p class="product-description">{{ produit.description }}</p>
+                            <div class="product-price">
+                                <span class="discount-price">{{ produit.prix }} €</span>
+                                <p class="product-description">
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        STOCK : {{ produit.stock }}
+                                    {% endif %}
+                                    
+                                    {% if produit.stock == 0 %}
+                                        Out of stock
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="d-flex">
+                                <p>
+                                    <a class="btn btn-primary mr-2" href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir le produit</a>
+                                    {% if is_granted("ROLE_ADMIN") %}
+                                        <a class="btn btn-secondary" href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                {% else %}
+                    <tr>
+                        <td colspan="7">Aucun produit</td>
+                    </tr>
+                {% endfor %}
             </div> 
         </tbody>
     </table>
-
-    <a href="{{ path('app_produit_new') }}">Create new</a>
 {% endblock %}

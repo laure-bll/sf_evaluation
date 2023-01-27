@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier index{% endblock %}
+{% block title %}Commandes{% endblock %}
 
 {% block body %}
-    <h1>Panier index</h1>
+    <h1 class="text text-center">Commandes</h1>
+    <br/>
 
     <table class="table">
         <thead>
@@ -11,7 +12,6 @@
                 <th>Id</th>
                 <th>Date_achat</th>
                 <th>Etat</th>
-                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,19 +19,13 @@
             <tr>
                 <td>{{ panier.id }}</td>
                 <td>{{ panier.dateAchat ? panier.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ panier.etat ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_panier_show', {'id': panier.id}) }}">show</a>
-                    <a href="{{ path('app_panier_edit', {'id': panier.id}) }}">edit</a>
-                </td>
+                <td>{{ panier.etat ? 'Payée' : 'Non payée' }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="3">Aucune commande passée, ni de panier en cours.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_panier_new') }}">Create new</a>
 {% endblock %}
