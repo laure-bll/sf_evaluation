@@ -54,9 +54,8 @@ class ProduitController extends AbstractController
                 }
 
                 $produit->setPhoto($newFilename);
+                $produitRepository->save($produit, true);
             }
-
-            $produitRepository->save($produit, true);
 
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -1,23 +1,18 @@
-
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">                        
-        <h2 class="form-title">Create an Article</h2>
-                </div>
+            <h2 class="form-title">Create an Article</h2>
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-          
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">          
             {{ form_start(form) }}
 
                 {{ form_widget(form) }}
 
                 <button class="btn">{{ button_label|default('Save') }}</button>
             {{ form_end(form) }}
-            </form><!-- End form -->
-
         </div><!-- End col -->
     </div><!-- End row -->
 

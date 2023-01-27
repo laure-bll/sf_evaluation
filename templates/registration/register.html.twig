@@ -5,6 +5,11 @@
 {% block body %}
     <h1>Register</h1>
 
+    <p>
+        Already have an account ? Sign in just
+        <a class="h4 mb-3 font-weight-normal" href="{{ path('app_login') }}">here</a
+    </p>
+
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.prenom) }}
         {{ form_row(registrationForm.nom) }}
