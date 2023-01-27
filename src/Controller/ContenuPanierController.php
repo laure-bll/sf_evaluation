@@ -37,19 +37,33 @@ class ContenuPanierController extends AbstractController
             $panier->setUtilisateur($this->getUser());
             // $panier->setDateAchat(new Datetime());
             $panierRepository->save($panier, true);
-
         }
 
-        $contenuPanier = new ContenuPanier();
-        $contenuPanier->setDate(new Datetime());
-        $contenuPanier->setPanier($panier);
-        $contenuPanier->setProduit($produit);
-        $contenuPanier->setQuantite($request->get("contenu_panier")["quantite"]);
+        $updateContenuPanier = null;
+
+        // todo : limiter la quantite selon le stock du produit
+        foreach($panier->getContenuPaniers() as $contenu) {
+            if($contenu->getProduit() === $produit) {
+                $updateContenuPanier = $contenu;
+            }
+        }
+
+        if(!is_null($updateContenuPanier)) {
+            $contenuPanier = $updateContenuPanier;
+            $quantite = $request->get("contenu_panier")["quantite"] + $updateContenuPanier->getQuantite();
+            $contenuPanier->setQuantite($quantite);
+        }
+        else {
+            $contenuPanier = new ContenuPanier();
+            $contenuPanier->setDate(new Datetime());
+            $contenuPanier->setPanier($panier);
+            $contenuPanier->setProduit($produit);
+            $contenuPanier->setQuantite($request->get("contenu_panier")["quantite"]);
+        }
+
         $contenuPanierRepository->save($contenuPanier, true);
 
-        return $this->render('contenu_panier/show.html.twig', [
-            'contenu_panier' => $contenuPanier,
-        ]);
+        return $this->redirectToRoute("app_contenu_panier_index");
     }
 
     #[Route('/contenu/panier/{id}', name: 'app_contenu_panier_show', methods: ['GET'])]
