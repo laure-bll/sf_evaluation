@@ -1,43 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit index{% endblock %}
+{% block title %}PALETT{% endblock %}
 
 {% block body %}
-    <h1>Produit index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Stock</th>
-                <th>Photo</th>
-                <th>actions</th>
-            </tr>
-        </thead>
+ <link rel="stylesheet" href="{{ asset('/css/style1.css') }}">
+    <h1>Shop our products</h1>
+
+
         <tbody>
+        <div class="product-container">
         {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nom }}</td>
-                <td>{{ produit.description }}</td>
-                <td>{{ produit.prix }}</td>
-                <td>{{ produit.stock }}</td>
-                <td>{{ produit.photo }}</td>
+
+  <div class="product-card">
+ <img class="w-25" src="{{ asset('uploads/photos/' ~ produit.photo) }}" alt="Product Name" class="product-image"/>
+  <h3 class="product-name">{{ produit.nom }}</h3>
+  <p class="product-description">{{ produit.description }}</p>
+ <div class="product-price">
+    <span class="discount-price">{{ produit.prix }}</span>
+     <p class="product-description">{{ produit.stock }}</p>
+  </div>  <button class="add-to-cart-button">Add to Cart</button>
+ </div>     
                 <td>
                     <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
                     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
                 </td>
-            </tr>
+ 
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
             </tr>
         {% endfor %}
+        </div> 
         </tbody>
     </table>
 
     <a href="{{ path('app_produit_new') }}">Create new</a>
+
+
+
+
+
+
+    
 {% endblock %}
