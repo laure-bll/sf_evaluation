@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -18,6 +19,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Email]
+    #[ORM\Unique]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 6,
+        max: 180,
+        // todo : traduction
+        minMessage: 'Your email must be at least {{ limit }} characters long',
+        maxMessage: 'Your email cannot be longer than {{ limit }} characters',
+    )]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -29,9 +40,23 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Your last name must be at least {{ limit }} characters long',
+        maxMessage: 'Your last name cannot be longer than {{ limit }} characters',
+    )]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Your first name must be at least {{ limit }} characters long',
+        maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+    )]
+    #[Assert\NotBlank]
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
@@ -147,5 +172,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         $this->panier = $panier;
 
         return $this;
+    }
+    public function __toString(): string {
+        return $this->prenom . " " . $this->nom;
     }
 }

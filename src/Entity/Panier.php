@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
 class Panier
@@ -21,9 +23,12 @@ class Panier
     private ?Utilisateur $Utilisateur = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Datetime]
     private ?\DateTimeInterface $date_achat = null;
 
     #[ORM\Column]
+    #[ORM\NotBlank]
+    #[Assert\Type('boolean')]
     private ?bool $etat = null;
 
     #[ORM\OneToMany(mappedBy: 'panier', targetEntity: ContenuPanier::class, orphanRemoval: true)]

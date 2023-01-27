@@ -23,24 +23,38 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
+        if ($form->isSubmitted()) {
+                if($form->isValid()) {
+                // Récupère tous les utilisateurs de la bdd.
+                $users = $entityManager->getRepository(Utilisateur::class)->findAll();
+                
+                // Le role du premier utilisateur créé sera automatiquement SUPER ADMIN.
+                if(count($users) == 0) {
+                    $user->setRoles(["ROLE_SUPER_ADMIN", "ROLE_ADMIN", "ROLE_USER"]);
+                } else {
+                    $user->setRoles(["ROLE_USER"]);
+                }
+
+                // encode the plain password
+                $user->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $userAuthenticator->authenticateUser(
                     $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-            // do anything else you need here, like send an email
-
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+                    $authenticator,
+                    $request
+                );
+            } else {
+                // todo : trad
+                $this->addFlash("danger", "Sorry, your account could not be created.");
+            }
         }
 
         return $this->render('registration/register.html.twig', [

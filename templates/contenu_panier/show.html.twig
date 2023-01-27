@@ -16,6 +16,10 @@
                 <td>{{ contenu_panier.quantite }}</td>
             </tr>
             <tr>
+                <th>Produit</th>
+                <td>{{ contenu_panier.produit.nom }}</td>
+            </tr>
+            <tr>
                 <th>Date</th>
                 <td>{{ contenu_panier.date ? contenu_panier.date|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
