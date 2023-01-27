@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -14,6 +15,42 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="nav">
+            <div class="nav-main">
+                <div class="logo">PALE<span>TT</span></div>
+                <ul class="nav-links">
+                    <li class="nav-link"><a href="{{ path('app_produit_index') }}">Home</a></li>
+                    <li class="nav-link"><a href="">Our Team</a></li>
+                    <li class="nav-link dropdown"><a href="" class="dropdown">Services <i class="bi bi-chevron-compact-down"></i></a>
+                    <ul class="dropdown-list">
+                        <li class="nav-link"><a href="">Service 1</a>
+                        <li class="nav-link"><a href="">Service 2</a>
+                    </ul>
+                    </li>
+                    <li class="nav-link"><a href="">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="cta">
+                <button class="btn btn-secondary"><a href="{{ path('app_register') }}">Log In</a></button>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+            <div class="menu">
+                <button class="btn btn-primary menu"><i class="bi-list"></i></button>
+                <ul class="nav-mobile">
+                    <li class="nav-link"><a href="">Home</a></li>
+                    <li class="nav-link"><a href="">Our Team</a></li>
+                    <li class="nav-link dropdown"><a href="" class="dropdown">Services <i class="bi bi-chevron-compact-down"></i></a>
+                    <ul class="dropdown-list">
+                        <li class="nav-link"><a href="">Service 1</a>
+                        <li class="nav-link"><a href="">Service 2</a>
+                    </ul>
+                    </li>
+                    <li class="nav-link"><a href="">Blog</a></li>
+                </ul>
+            </div>
+        </nav>
+        
         <div class="container mt-2">
             {% for type, messages in app.flashes %}
                 {% for message in messages %}

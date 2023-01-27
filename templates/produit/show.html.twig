@@ -1,38 +1,38 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}
+	{{produit.nom }}
+{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ produit.nom }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.description }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ produit.prix }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ produit.stock }}</td>
-            </tr>
-            <tr>
-                <th>Photo</th>
-                <td>{{ produit.photo }}</td>
-            </tr>
-        </tbody>
-    </table>
+ <link rel="stylesheet" href="{{ asset('/css/style2.css') }}">
+    <div class="product">
+        <div class="header">
+            <div class="back"></div>
+        </div>
+        
+        <div class="main">
+            <h2>{{produit.nom}}</h2>
+            <div class="left">
+                <img class="w-26" src="{{ asset('uploads/photos/' ~ produit.photo) }}" alt="Product Name" class="product-image"/>
+            </div>
+            <div class="right">
+                <p> {{produit.description}}</p>
+                <p>In stock.</p>
+                <p class="quantity">QUANTITY : {{produit.stock}} </p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="left">
+                <p id="price">{{produit.prix}} EUR</p>
+            </div>
+            <div class="right">
+                <p>Add to Cart</p>
+            </div>
+        </div>
+    </div>
 
     {{ form(form_contenu_panier) }}
 
