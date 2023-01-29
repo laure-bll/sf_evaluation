@@ -1,9 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-  {{ asset('/css/style3.css') }}
-{% endblock %}
-
 {% block body %}
     {% if contenu_paniers|length > 0 %}
         {% for contenu_panier in contenu_paniers %}
