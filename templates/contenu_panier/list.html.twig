@@ -20,7 +20,7 @@
               <tr>
                     {% if super_admin %}
                         <th>#{{ contenu_panier.id }}</th>
-                        <td>{{ contenu_panier.panier.utilisateur }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
+                        <td>{{ contenu_panier.panier.utilisateur.email }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
                     {% endif %}
                     <td class="col-md-2">
                         <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
