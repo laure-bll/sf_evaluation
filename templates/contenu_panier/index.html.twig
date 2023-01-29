@@ -35,10 +35,17 @@
                             {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
                         </td>
                     </tr>
+                
                 {% endfor %}
         </tbody>
+         {{ include('contenu_panier/_buy_form.html.twig', {'id': contenu_paniers[0].panier.id}) }}
+          
     {% else %}
         <p class="text text-center">Votre panier est vide !</p>
     {% endif %}
+
+            
+   
+    
     </table>
 {% endblock %}

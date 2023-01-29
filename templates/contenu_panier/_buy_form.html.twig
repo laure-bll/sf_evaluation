@@ -1,0 +1,4 @@
+<form method="put" action="{{ path('app_contenu_panier_buy', {'id': contenu_paniers[0].panier.id}) }}" onsubmit="return confirm('You're about to buy these products, are you sure you wanne procede?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('buy' ~ contenu_paniers[0].panier.id) }}">
+    <button class="btn btn-primary" title="buy">BUY</button>
+</form>
