@@ -111,10 +111,6 @@ li {
   padding: 0.625rem 0;
 }
 
-li.price:before,
-li.subtotal:before {
-  content: "";
-}
 
 .item {
   width: 55%;
