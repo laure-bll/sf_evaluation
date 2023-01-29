@@ -1,0 +1,51 @@
+{% if contenu_paniers|length > 0 %}
+        <table class="table">
+        <thead>
+          <tr>
+                {% if super_admin %}
+                    <th>Numéro</th>
+                    <th>Utilisateur (ID)</th>
+                {% endif %}
+                <th>Produit</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Montant total</th>
+                {% if super_admin is same as false %}
+                    <th>Action</th>
+                {% endif %}
+          </tr>
+      </thead>
+      <tbody>
+          {% for contenu_panier in contenu_paniers %}
+              <tr>
+                    {% if super_admin %}
+                        <th>#{{ contenu_panier.id }}</th>
+                        <td>{{ contenu_panier.panier.utilisateur }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
+                    {% endif %}
+                    <td class="col-md-2">
+                        <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
+                        <br/>
+                        {{ contenu_panier.produit.nom }}
+                    </td>
+                    <td>{{ contenu_panier.produit.prix }}€</td>
+                    <td>{{ contenu_panier.quantite }}</td>
+                    <td>
+                        {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
+                        {{ montant }}€
+                    </td>
+                    {% if super_admin is same as false %}
+                        <td>
+                            {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                        </td>
+                    {% endif %}
+              </tr>
+          {% endfor %}
+      </tbody>
+    {% else %}
+        {% if super_admin %}
+            <p class="bg-warning text-center">Aucun panier en cours !</p>
+        {% else %}
+            <p class="text text-center">Votre panier est vide !</p>
+        {% endif %}
+    {% endif %}
+</table>

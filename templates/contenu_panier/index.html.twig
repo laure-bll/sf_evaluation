@@ -6,39 +6,5 @@
     <h1>Mon panier</h1>
     <br/>
 
-    {% if contenu_paniers|length > 0 %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix unitaire</th>
-                    <th>Quantité</th>
-                    <th>Montant total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for contenu_panier in contenu_paniers %}
-                    <tr>
-                        <td class="col-md-2">
-                            <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
-                            <br/>
-                            {{ contenu_panier.produit.nom }}
-                        </td>
-                        <td>{{ contenu_panier.produit.prix }}€</td>
-                        <td>{{ contenu_panier.quantite }}</td>
-                        <td>
-                            {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
-                            {{ montant }}€
-                        </td>
-                        <td>
-                            {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-        </tbody>
-    {% else %}
-        <p class="text text-center">Votre panier est vide !</p>
-    {% endif %}
-    </table>
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: contenu_paniers, super_admin: false }) }}
 {% endblock %}

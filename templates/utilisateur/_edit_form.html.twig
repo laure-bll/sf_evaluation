@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}" onsubmit="return confirm('Are you sure you want to {{ action }}?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ utilisateur.id) }}">
+    <input type="hidden" name="_admin" value="{{admin}}">
+    <button class="btn {{admin ? 'btn-primary' : ''}}">{{ action }}</button>
+</form>
