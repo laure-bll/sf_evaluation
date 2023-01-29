@@ -40,9 +40,9 @@ class ContenuPanierRepository extends ServiceEntityRepository
     }
 
    /**
-    * @return ContenuPanier[] Returns an array of ContenuPanier objects from Panier etat false
+    * @return ContenuPanier[] Returns an array of ContenuPanier objects's connected user from Panier etat false
     */
-   public function findByEtatFalse($user): array
+   public function findByUserEtatFalse($user): array
    {
        return $this->createQueryBuilder('c')
             ->leftJoin('c.panier', 'panier')
@@ -54,13 +54,17 @@ class ContenuPanierRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?ContenuPanier
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+    * @return ContenuPanier[] Returns an array of all ContenuPanier objects
+    */
+    public function findByEtat($etat): array
+    {
+        return $this->createQueryBuilder('c')
+            ->leftJoin('c.panier', 'panier')
+            ->andWhere('panier.etat = :e')
+            ->setParameter('e', $etat)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

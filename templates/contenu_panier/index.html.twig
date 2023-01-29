@@ -1,78 +1,80 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+  {{ asset('/css/style3.css') }}
+{% endblock %}
+
 {% block body %}
- <link rel="stylesheet" href="{{ asset('/css/style3.css') }}">
-
-
-<html lang="en">
-
-<head>
-  
     {% if contenu_paniers|length > 0 %}
+        {% for contenu_panier in contenu_paniers %}
+            <div class="basket">
+                <div class="basket-labels">
+                    <ul>
+                        <li class="item item-heading">Produit</li>
+                        <li class="price">Prix unitaire</li>
+                        <li class="quantity">Quantité</li>
+                        <li class="subtotal">Sous-total</li>
+                    </ul>
+                </div>
+                <div class="basket-product">
+                    <div class="item">
+                        <div class="product-image">
+                            <img class="product-frame" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
+                        </div>
+                        <div class="product-details">
+                            <h2>
+                                <strong> 
+                                    <span class="item-quantity"></span>{{contenu_panier.produit.nom}}
+                                </strong>
+                            </h2>
+                            
+                            <p>{{ contenu_panier.produit.description }}</p>
+                        </div>
+                    </div>
+                    <div class="price">{{ contenu_panier.produit.prix }}EUR</div>
+                    <div class="quantity">
+                        <h2>
+                            <strong>
+                                <span class="item-quantity"></span>
+                                {{ contenu_panier.quantite }}
+                            </strong>
+                        </h2>
+                    </div>
+                    <div class="subtotal">
+                        {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
+                        {{ montant }}EUR
+                    </div>
+                    <div class="remove">
+                        {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 
-    {% for contenu_panier in contenu_paniers %}
+        {# total de la commande #}
+        <aside>
+            <div class="summary">
+                <div class="summary-total-items"><span class="total-items"></span> Produits dans ton panier</div>
+                <div class="summary-total">
+                    <div class="total-title">Total</div>
+                    <div class="total-value final-value" id="basket-total">
+                        {% set somme = 0 %}
+                        
+                        {% for contenu_panier in contenu_paniers %}
+                            {% set somme = somme + contenu_panier.produit.prix * contenu_panier.quantite  %}
+                        {% endfor %}
+                        
+                        {{somme}} EUR
+                    </div>
+                </div>
 
-    <div class="basket">
-      <div class="basket-labels">
-        <ul>
-          <li class="item item-heading">Produit</li>
-          <li class="price">Prix</li>
-          <li class="quantity">Quantité</li>
-          <li class="subtotal">Sous-total</li>
-        </ul>
-      </div>
-      <div class="basket-product">
-        <div class="item">
-          <div class="product-image">
-            <img class="product-frame" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
-          </div>
-          <div class="product-details">
-         <h1><strong>  <span class="item-quantity"></span>{{contenu_panier.produit.nom}} </strong></h1>
-            <p>{{ contenu_panier.produit.description }}</p>
-          </div>
-        </div>
-        <div class="price">{{ contenu_panier.produit.prix }}EUR</div>
-        <div class="quantity">
-         <h1><strong>  <span class="item-quantity"></span>   {{ contenu_panier.quantite }} </strong></h1>
-      
-        </div>
-        <div class="subtotal"> {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
-                            {{ montant }}EUR</div>
-        <div class="remove">
-        
-          {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-
-{# mettre le total de la commande en dessous #}
-
-    <aside>
-      <div class="summary">
-        <div class="summary-total-items"><span class="total-items"></span> Produits dans ton panier</div>
-        <div class="summary-total">
-          <div class="total-title">Total</div>
-          <div class="total-value final-value" id="basket-total">
-    
-{% set somme = 0 %}
-  {% for contenu_panier in contenu_paniers %}
-
-    {% set somme = somme + contenu_panier.produit.prix * contenu_panier.quantite  %}
-     {% endfor %}
-           {{somme}} EUR
-          </div>
-        </div>
-        <div class="summary-checkout">
-          {{ include('contenu_panier/_buy_form.html.twig', {'id': contenu_paniers[0].panier.id}) }}
-          
-        </div>
-      </div>
-    </aside>
-  
-
- {% else %}
+                <div class="summary-checkout">
+                    {{ include('contenu_panier/_buy_form.html.twig', {'id': contenu_paniers[0].panier.id}) }}
+                </div>
+            </div>
+        </aside>
+    {% else %}
+        <br/>
         <p class="text text-center">Votre panier est vide !</p>
     {% endif %}
-
 {% endblock %}

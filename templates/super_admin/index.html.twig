@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block body %}
+<style>
+    .wrapper-dashboard { margin: 1em auto; font: 18px/1.5 sans-serif; }
+    .wrapper-dashboard code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="wrapper-dashboard">
+    <h1 class="text-center">Tableau de bord</h1>
+
+    <h3>Paniers en cours</h3>
+
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: unpaid_paniers, super_admin: true }) }}
+
+    <h3>Nouveaux utilisateurs du jour</h3>
+
+    {% if utilisateurs|length > 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Date d'arrivée</th>
+                <th>Rôle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <th>
+                        #{{ utilisateur.id }}
+                        {% if "ROLE_ADMIN" in utilisateur.roles %}
+                            <i class="fa-solid fa-crown"></i>
+                        {% endif %}
+                        {% if "ROLE_SUPER_ADMIN" in utilisateur.roles %}
+                            <i class="fa-solid fa-crown"></i>
+                        {% endif %}
+                    </th>
+                    <td>{{ utilisateur.prenom }}</td>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.date|date("d/m/Y") }}</td>
+                    {% if "ROLE_SUPER_ADMIN" not in utilisateur.roles %}
+                        <td>
+                            {% if "ROLE_ADMIN" in utilisateur.roles %}
+                                {{ include('utilisateur/_edit_form.html.twig', {'utilisateur': utilisateur, 'admin': 0, 'action': 'Retirer le rôle admin'}) }}
+                            {% else %}
+                                {{ include('utilisateur/_edit_form.html.twig', {'utilisateur': utilisateur, 'admin': 1, 'action': 'Attribuer le rôle admin'}) }}
+                            {% endif %}
+                        </td>
+                        {% else %}
+                        <th class="text-warning">
+                            SUPER ADMIN
+                        </th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    {% else %}
+        <p class="text text-center">Pas de nouveaux utilisateurs aujourd'hui !</p>
+    {% endif %}
+    </table>
+</div>
+{% endblock %}
