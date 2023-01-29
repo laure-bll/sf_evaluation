@@ -72,12 +72,45 @@ class ContenuPanierController extends AbstractController
     }
 
     #[Route('/contenu/panier/{id}', name: 'app_contenu_panier_delete', methods: ['POST'])]
-    public function delete(Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
+    public function delete($id, Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contenuPanier->getId(), $request->request->get('_token'))) {
-            $contenuPanierRepository->remove($contenuPanier, true);
+           $contenuPanierRepository->remove($contenuPanier, true);
+          // dd($contenuPanier);
         }
 
         return $this->redirectToRoute('app_contenu_panier_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/contenu/panier/{id}/buy', name: 'app_contenu_panier_buy', methods: ['PUT','GET'])]
+    public function buy(int $id, Request $request, EntityManagerInterface $em): Response
+    {
+       // dd($id); doesnt work with token, dont know why
+       // if ($this->isCsrfTokenValid('buy'.$contenuPanier->getId(), $request->request->get('_token'))) {
+
+            $panier = $em->getRepository(Panier::class)->find($id);
+            $contenuPersist = null;
+            foreach($panier->getContenuPaniers() as $contenu) {
+               // dd($contenu);
+              $quantite =  $contenu->getQuantite();
+              $stock = $contenu->getProduit()->getStock();
+                if($stock - $quantite >= 0) {
+                    $contenu->getProduit()->setStock($stock - $quantite);
+                    $contenuPersist = $em->persist($contenu);
+                } else {
+                    $error = 'Error Panier.';
+                    return $this->redirectToRoute('app_contenu_panier_index', ['error' => $error], Response::HTTP_SEE_OTHER);
+                }
+
+            }
+
+            $panier->setEtat(true);
+                 //dd($contenu);
+            $em->persist($contenu);
+            $em->flush();
+
+       // }
+
+        return $this->redirectToRoute('app_contenu_panier_index',[], Response::HTTP_SEE_OTHER);
     }
 }
