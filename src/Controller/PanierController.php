@@ -6,6 +6,7 @@ use Datetime;
 use App\Entity\Panier;
 use App\Form\PanierType;
 use App\Repository\PanierRepository;
+use App\Repository\ContenuPanierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,10 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PanierController extends AbstractController
 {
     #[Route('/', name: 'app_panier_index', methods: ['GET'])]
-    public function index(PanierRepository $panierRepository): Response
+    public function index(ContenuPanierRepository $contenuPanierRepository): Response
     {
+        $user = $this->getUser();
+
+        // Récupère les commandes de l'utilisateur connecté.
         return $this->render('panier/index.html.twig', [
-            'paniers' => $panierRepository->findAll(),
+            'paniers' => $contenuPanierRepository->findByUserEtat($user, true),
+            'utilisateur' => $user
         ]);
     }
 

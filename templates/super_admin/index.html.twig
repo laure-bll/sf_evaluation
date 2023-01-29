@@ -13,7 +13,7 @@
 
     <h3>Paniers en cours</h3>
 
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: unpaid_paniers, super_admin: true }) }}
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: unpaid_paniers, super_admin: true, commande: false }) }}
 
     <h3>Nouveaux utilisateurs du jour</h3>
 

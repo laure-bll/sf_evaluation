@@ -1,31 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commandes{% endblock %}
+{% block title %}Mon compte{% endblock %}
 
 {% block body %}
-    <h1 class="text text-center">Commandes</h1>
+    <h1 class="text text-center">Mon compte</h1>
     <br/>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Date_achat</th>
-                <th>Etat</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for panier in paniers %}
-            <tr>
-                <td>{{ panier.id }}</td>
-                <td>{{ panier.dateAchat ? panier.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ panier.etat ? 'Payée' : 'Non payée' }}</td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">Aucune commande passée, ni de panier en cours.</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h3>Historique de mes commandes</h3>
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true }) }}
+
+    {{ include('utilisateur/show.html.twig', {'utilisateur': utilisateur}) }}    
 {% endblock %}

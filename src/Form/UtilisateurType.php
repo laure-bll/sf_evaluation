@@ -11,7 +11,11 @@ class UtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('roles');
+        $builder
+            ->add('email')
+            ->add('nom')
+            ->add('prenom')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

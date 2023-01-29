@@ -41,8 +41,11 @@
                     {% elseif is_granted("ROLE_ADMIN") %}
                         <small class="btn btn-warning"><i class="fa-solid fa-crown"></i>ADMIN</small>
                     {% endif %}
-
-                    <button class="btn btn-primary"><i class="fa-solid fa-user-large"></i></button>                    
+                    
+                    <a href="{{ path('app_panier_index') }}">
+                        <button class="btn btn-primary"><i class="fa-solid fa-user-large"></i></button>
+                    </a>
+                    
                     <a href="{{ path('app_logout') }}"><button class="btn btn-secondary"><i class="fa-solid fa-right-from-bracket"></i></button></a>
                 {% else %}
                     <a href="{{ path('app_register') }}"><small class="btn btn-secondary"><i class="fa-solid fa-user-large"></i></small></a>

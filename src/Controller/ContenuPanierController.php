@@ -25,7 +25,7 @@ class ContenuPanierController extends AbstractController
 
         // Récupère uniquement le contenu de panier non payé de l'utilisateur connecté.
         return $this->render('contenu_panier/index.html.twig', [
-            'contenu_paniers' => $contenuPanierRepository->findByUserEtatFalse($user),
+            'contenu_paniers' => $contenuPanierRepository->findByUserEtat($user, false),
         ]);
     }
 

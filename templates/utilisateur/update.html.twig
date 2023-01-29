@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes informations{% endblock %}
+
+{% block body %}
+    <h1>Mes informations</h1>
+
+    <p><a class="btn-link" href="{{ path('app_panier_index') }}">Mon espace</a> > Modifier mes informations</p>
+
+    {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <br/>
+      <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+{% endblock %}

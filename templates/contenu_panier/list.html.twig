@@ -2,15 +2,22 @@
         <table class="table">
         <thead>
           <tr>
-                {% if super_admin %}
+                {% if super_admin or commande %}
                     <th>Numéro</th>
-                    <th>Utilisateur (ID)</th>
+                    {% if super_admin %}
+                        <th>Utilisateur (ID)</th>
+                    {% endif %}
                 {% endif %}
                 <th>Produits</th>
-                <th>Prix unitaire</th>
-                <th>Quantité</th>
+                {% if commande is same as false %}
+                    <th>Prix unitaire</th>
+                    <th>Quantité</th>
+                {% endif %}
                 <th>Montant total</th>
-                {% if super_admin is same as false %}
+                {% if commande %}
+                    <th>Date d'achat</th>
+                {% endif %}
+                {% if super_admin is same as false or (commande is same as true) %}
                     <th>Action</th>
                 {% endif %}
           </tr>
@@ -18,24 +25,37 @@
       <tbody>
           {% for contenu_panier in contenu_paniers %}
               <tr>
-                    {% if super_admin %}
+                    {% if super_admin  or commande %}
                         <th>#{{ contenu_panier.id }}</th>
-                        <td>{{ contenu_panier.panier.utilisateur.email }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
+                        {% if super_admin %}
+                            <td>{{ contenu_panier.panier.utilisateur.email }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
+                        {% endif %}
                     {% endif %}
-                    <td class="col-md-2">
-                        <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
-                        <br/>
-                        {{ contenu_panier.produit.nom }}
-                    </td>
-                    <td>{{ contenu_panier.produit.prix }}€</td>
-                    <td>{{ contenu_panier.quantite }}</td>
+                        <td class="col-md-2">
+                            {% if commande is same as false %}
+                                <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
+                                <br/>
+                            {% endif %}
+                            {{ contenu_panier.produit.nom }}
+                        </td>
+                    {% if commande is same as false %}
+                        <td>{{ contenu_panier.produit.prix }}€</td>
+                        <td>{{ contenu_panier.quantite }}</td>
+                    {% endif %}
                     <td>
                         {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
                         {{ montant }}€
                     </td>
-                    {% if super_admin is same as false %}
+                    {% if commande %}
+                        <td>{{ contenu_panier.panier.dateAchat|date("d/m/Y h:i:s") }}</td>
+                    {% endif %}
+                    {% if (super_admin is same as false) or (commande is same as true) %}
                         <td>
-                            {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                            {% if contenu_panier.panier.etat is same as true %}
+                                <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.panier.id}) }}">Voir la commande</a>
+                            {% else %}
+                                    {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                            {% endif %}
                         </td>
                     {% endif %}
               </tr>

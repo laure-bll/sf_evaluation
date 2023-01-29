@@ -42,13 +42,14 @@ class ContenuPanierRepository extends ServiceEntityRepository
    /**
     * @return ContenuPanier[] Returns an array of ContenuPanier objects's connected user from Panier etat false
     */
-   public function findByUserEtatFalse($user): array
+   public function findByUserEtat($user, $etat): array
    {
        return $this->createQueryBuilder('c')
             ->leftJoin('c.panier', 'panier')
             ->andWhere('panier.Utilisateur = :u')
             ->setParameter('u', $user)
-            ->andWhere('panier.etat = false')
+            ->andWhere('panier.etat = :e')
+            ->setParameter('e', $etat)
             ->getQuery()
             ->getResult()
        ;
