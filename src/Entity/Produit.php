@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Produit
 {
     #[ORM\Id]
@@ -34,7 +35,7 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
 
-    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ContenuPanier::class)]
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ContenuPanier::class, orphanRemoval: true)]
     private Collection $contenuPaniers;
 
     public function __construct()
@@ -135,6 +136,13 @@ class Produit
         }
 
         return $this;
+    }
+
+    #[ORM\PostRemove]
+    public function deletePhoto() {
+        if($this->photo !== null) {
+            unlink(__DIR__ . "/../../public/uploads/photos/" . $this->photo);
+        }
     }
 
     public function __toString(): string {
