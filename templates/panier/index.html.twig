@@ -7,7 +7,7 @@
     <br/>
 
     <h3>Historique de mes commandes</h3>
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true }) }}
+    {{ include ("panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true }) }}
 
     {{ include('utilisateur/show.html.twig', {'utilisateur': utilisateur}) }}    
 {% endblock %}

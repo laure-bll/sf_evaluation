@@ -54,18 +54,4 @@ class ContenuPanierRepository extends ServiceEntityRepository
             ->getResult()
        ;
    }
-
-    /**
-    * @return ContenuPanier[] Returns an array of all ContenuPanier objects
-    */
-    public function findByEtat($etat): array
-    {
-        return $this->createQueryBuilder('c')
-            ->leftJoin('c.panier', 'panier')
-            ->andWhere('panier.etat = :e')
-            ->setParameter('e', $etat)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
 }

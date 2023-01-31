@@ -1,71 +1,46 @@
-{% if contenu_paniers|length > 0 %}
-        <table class="table">
-        <thead>
-          <tr>
-                {% if super_admin or commande %}
-                    <th>Numéro</th>
-                    {% if super_admin %}
-                        <th>Utilisateur (ID)</th>
-                    {% endif %}
-                {% endif %}
-                <th>Produits</th>
-                {% if commande is same as false %}
-                    <th>Prix unitaire</th>
-                    <th>Quantité</th>
-                {% endif %}
-                <th>Montant total</th>
-                {% if commande %}
-                    <th>Date d'achat</th>
-                {% endif %}
-                {% if super_admin is same as false or (commande is same as true) %}
-                    <th>Action</th>
-                {% endif %}
-          </tr>
-      </thead>
-      <tbody>
-          {% for contenu_panier in contenu_paniers %}
-              <tr>
-                    {% if super_admin  or commande %}
-                        <th>#{{ contenu_panier.id }}</th>
-                        {% if super_admin %}
-                            <td>{{ contenu_panier.panier.utilisateur.email }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
-                        {% endif %}
-                    {% endif %}
-                        <td class="col-md-2">
-                            {% if commande is same as false %}
-                                <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
-                                <br/>
-                            {% endif %}
-                            {{ contenu_panier.produit.nom }}
-                        </td>
-                    {% if commande is same as false %}
-                        <td>{{ contenu_panier.produit.prix }}€</td>
-                        <td>{{ contenu_panier.quantite }}</td>
-                    {% endif %}
-                    <td>
-                        {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
-                        {{ montant }}€
-                    </td>
-                    {% if commande %}
-                        <td>{{ contenu_panier.panier.dateAchat|date("d/m/Y h:i:s") }}</td>
-                    {% endif %}
-                    {% if (super_admin is same as false) or (commande is same as true) %}
-                        <td>
-                            {% if contenu_panier.panier.etat is same as true %}
-                                <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.panier.id}) }}">Voir la commande</a>
-                            {% else %}
-                                    {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
-                            {% endif %}
-                        </td>
-                    {% endif %}
-              </tr>
-          {% endfor %}
-      </tbody>
-    {% else %}
-        {% if super_admin %}
-            <p class="bg-warning text-center">Aucun panier en cours !</p>
-        {% else %}
-            <p class="text text-center">Votre panier est vide !</p>
-        {% endif %}
-    {% endif %}
-</table>
+{% for contenu_panier in contenu_paniers %}
+    <div class="basket">
+        <div class="basket-labels">
+            <ul>
+                <li class="item item-heading">Produit</li>
+                <li class="price">Prix unitaire</li>
+                <li class="quantity">Quantité</li>
+                <li class="subtotal">Sous-total</li>
+            </ul>
+        </div>
+        <div class="basket-product">
+            <div class="item">
+                <div class="product-image">
+                    <img class="product-frame" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
+                </div>
+                <div class="product-details">
+                    <h2>
+                        <strong> 
+                            <span class="item-quantity"></span>{{contenu_panier.produit.nom}}
+                        </strong>
+                    </h2>
+                    
+                    <p>{{ contenu_panier.produit.description }}</p>
+                </div>
+            </div>
+            <div class="price">{{ contenu_panier.produit.prix }}EUR</div>
+            <div class="quantity">
+                <h2>
+                    <strong>
+                        <span class="item-quantity"></span>
+                        {{ contenu_panier.quantite }}
+                    </strong>
+                </h2>
+            </div>
+            <div class="subtotal">
+                {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
+                {{ montant }}EUR
+            </div>
+            {% if display_action %}
+                <div class="remove">
+                    {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

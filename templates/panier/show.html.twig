@@ -1,30 +1,22 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/style3.css') }}">
+
+    <style>
+        .basket { width: 100% !important; }
+    </style>
+{% endblock %}
 
 {% block title %}Panier{% endblock %}
 
 {% block body %}
-    <h1>Panier</h1>
+    <h1 class="text-center">Commande n°{{panier.id}}</h1>
+    <h4 class="text-center">Payée le {{ panier.dateAchat ? panier.dateAchat|date('d/m/Y') : '' }}</h4>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ panier.id }}</td>
-            </tr>
-            <tr>
-                <th>Date_achat</th>
-                <td>{{ panier.dateAchat ? panier.dateAchat|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Etat</th>
-                <td>{{ panier.etat ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <p>
+        <a class="btn-link" href="{{ path('app_panier_index') }}">Mon espace </a> > Historique des commandes > Commande n°{{ panier.id }}
+    </p>
+    <br/>
 
-    <a href="{{ path('app_panier_index') }}">back to list</a>
-
-    <a href="{{ path('app_panier_edit', {'id': panier.id}) }}">edit</a>
-
-    {{ include('panier/_delete_form.html.twig') }}
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: panier.contenuPaniers, display_action: false }) }}
 {% endblock %}

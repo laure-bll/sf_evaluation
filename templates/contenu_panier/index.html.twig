@@ -2,50 +2,8 @@
 
 {% block body %}
     {% if contenu_paniers|length > 0 %}
-        {% for contenu_panier in contenu_paniers %}
-            <div class="basket">
-                <div class="basket-labels">
-                    <ul>
-                        <li class="item item-heading">Produit</li>
-                        <li class="price">Prix unitaire</li>
-                        <li class="quantity">Quantité</li>
-                        <li class="subtotal">Sous-total</li>
-                    </ul>
-                </div>
-                <div class="basket-product">
-                    <div class="item">
-                        <div class="product-image">
-                            <img class="product-frame" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
-                        </div>
-                        <div class="product-details">
-                            <h2>
-                                <strong> 
-                                    <span class="item-quantity"></span>{{contenu_panier.produit.nom}}
-                                </strong>
-                            </h2>
-                            
-                            <p>{{ contenu_panier.produit.description }}</p>
-                        </div>
-                    </div>
-                    <div class="price">{{ contenu_panier.produit.prix }}EUR</div>
-                    <div class="quantity">
-                        <h2>
-                            <strong>
-                                <span class="item-quantity"></span>
-                                {{ contenu_panier.quantite }}
-                            </strong>
-                        </h2>
-                    </div>
-                    <div class="subtotal">
-                        {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
-                        {{ montant }}EUR
-                    </div>
-                    <div class="remove">
-                        {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+        
+        {{ include ("contenu_panier/list.html.twig", { contenu_paniers: contenu_paniers, display_action: true }) }}
 
         {# total de la commande #}
         <aside>
