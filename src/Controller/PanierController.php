@@ -12,8 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
-#[Route('/panier')]
+#[Route('{_locale}/panier')]
 class PanierController extends AbstractController
 {
     #[Route('/', name: 'app_panier_index', methods: ['GET'])]

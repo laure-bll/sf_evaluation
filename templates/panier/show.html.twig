@@ -17,6 +17,5 @@
         <a class="btn-link" href="{{ path('app_panier_index') }}">Mon espace </a> > Historique des commandes > Commande n°{{ panier.id }}
     </p>
     <br/>
-
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: panier.contenuPaniers, display_action: false }) }}
+{{ include ("contenu_panier/list.html.twig", { contenu_paniers: panier.contenuPaniers, super_admin: false, commande: false, display_action: false }) }}
 {% endblock %}

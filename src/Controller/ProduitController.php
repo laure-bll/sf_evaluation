@@ -118,7 +118,7 @@ class ProduitController extends AbstractController
 
 
     #[Route('/produit/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository): Response
+    public function edit(Request $request, Produit $produit, ProduitRepository $produitRepository, SluggerInterface $slugger): Response
     {
         //crée un formulaire pour editer les données dejà entrées sur le produit
         $form = $this->createForm(ProduitType::class, $produit);
@@ -126,6 +126,29 @@ class ProduitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $produitRepository->save($produit, true);
+
+            $photoFile = $form->get('photo')->getData();
+
+            // Upload de la photo.
+            if ($photoFile) {
+                // Renomme le fichier.
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    // Stocke le fichier dans le dossier indiqué.
+                    $photoFile->move(
+                        $this->getParameter('photos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash("danger", $t->trans('photo.incorrect'));
+                }
+
+                // Sauvegarde le nom du fichier en base de donnée.
+                $produit->setPhoto($newFilename);
+            }
 
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }

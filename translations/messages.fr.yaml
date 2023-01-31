@@ -37,7 +37,7 @@ commande:
   quantite : Quantité
   prixuni : Prix unitaire
   user: Utilisateur
-
+  vide: No orders
 
 
 title : 
