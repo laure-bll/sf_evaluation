@@ -1,0 +1,75 @@
+{% if paniers|length > 0 %}
+    {% set montant = 0 %}
+    <table class="table">
+        <thead>
+            <tr>
+                {% if super_admin or commande %}
+                    <th>Numéro</th>
+                    {% if super_admin %}
+                        <th>Utilisateur</th>
+                    {% endif %}
+                {% endif %}
+                {% if commande is same as false %}
+                    <th>Produits</th>
+                {% endif %}
+                <th>Montant total</th>
+                {% if commande %}
+                    <th>Date d'achat</th>
+                {% endif %}
+                {% if super_admin is same as false or (commande is same as true) %}
+                    <th>Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for panier in paniers %}
+                <tr>
+            {% if super_admin  or commande %}
+                <th>#{{ panier.id }}</th>
+                {% if super_admin %}
+                    <td>{{ panier.utilisateur.email }}</td>
+                {% endif %}
+            {% endif %}
+            {% if commande is same as false %}
+                <td class="col-md-2">
+                    <ul>
+                        {% for contenu in panier.contenuPaniers %}
+                            <li>
+                                <strong> 
+                                    <span class="item-quantity"></span>{{contenu.produit.nom}} x {{ contenu.quantite }}
+                                </strong>
+                                <div class="price">{{ contenu.produit.prix }}EUR</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            {% endif %}
+            <td>
+                {% for contenu in panier.contenuPaniers %}
+                    {% set montant = montant + (contenu.produit.prix * contenu.quantite) %}
+                {% endfor %}
+               {{ montant }}€
+            </td>
+            {% if commande %}
+                <td>{{ panier.dateAchat ? panier.dateAchat|date("d/m/Y h:i:s") : '' }}</td>
+            {% endif %}
+            {% if (super_admin is same as false) or (commande is same as true) %}
+                <td>
+                    {% if panier.etat is same as true %}
+                        <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': panier.id}) }}">Voir la commande</a>
+                    {% else %}
+                            {{ include('panier/_delete_form.html.twig', {'id': panier.id}) }}
+                    {% endif %}
+                </td>
+            {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    {% else %}
+        {% if super_admin %}
+            <p class="bg-warning text-center">Aucun panier en cours !</p>
+        {% else %}
+            <p class="text text-center">Vous n'avez aucune commande !</p>
+        {% endif %}
+    {% endif %}
+</table>

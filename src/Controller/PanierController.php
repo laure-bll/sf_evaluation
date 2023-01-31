@@ -17,13 +17,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PanierController extends AbstractController
 {
     #[Route('/', name: 'app_panier_index', methods: ['GET'])]
-    public function index(ContenuPanierRepository $contenuPanierRepository): Response
+    public function index(PanierRepository $panierRepository): Response
     {
         $user = $this->getUser();
 
         // Récupère les commandes de l'utilisateur connecté.
         return $this->render('panier/index.html.twig', [
-            'paniers' => $contenuPanierRepository->findByUserEtat($user, true),
+            'paniers' => $panierRepository->findByEtatAndUtilisateur(1, $user),
             'utilisateur' => $user
         ]);
     }

@@ -23,7 +23,7 @@
                                     <span class="item-quantity"></span>{{contenu_panier.produit.nom}}
                                 </strong>
                             </h2>
-                            
+
                             <p>{{ contenu_panier.produit.description }}</p>
                         </div>
                     </div>
@@ -46,6 +46,8 @@
                 </div>
             </div>
         {% endfor %}
+        
+        {{ include ("contenu_panier/list.html.twig", { contenu_paniers: contenu_paniers, display_action: true }) }}
 
         {# total de la commande #}
         <aside>

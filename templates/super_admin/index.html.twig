@@ -13,7 +13,7 @@
 
     <h3>{{ 'panier.encours'|trans }}</h3>
 
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: unpaid_paniers, super_admin: true, commande: false }) }}
+    {{ include ("panier/list.html.twig", { paniers: unpaid_paniers, super_admin: true, commande: false }) }}
 
     <h3>{{ 'title.new'|trans }}</h3>
 
