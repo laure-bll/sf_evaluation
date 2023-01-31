@@ -15,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
-
+#[Route('{_locale}')]
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]

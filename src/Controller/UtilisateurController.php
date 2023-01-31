@@ -58,9 +58,6 @@ class UtilisateurController extends AbstractController
 
                 return $this->redirectToRoute('app_panier_index');
             }
-            else {
-                dd($form);
-            }
         }
 
         return $this->renderForm('utilisateur/update.html.twig', [

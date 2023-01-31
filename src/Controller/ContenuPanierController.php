@@ -75,7 +75,6 @@ class ContenuPanierController extends AbstractController
     }
 
     #[Route('/contenu/panier/{id}', name: 'app_contenu_panier_delete', methods: ['POST'])]
-
     public function delete($id, Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
     { 
         //bouton delete pour supprimer un produit d'un panier

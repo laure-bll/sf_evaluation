@@ -23,7 +23,7 @@ panier:
    pay : Proceed to payment
    voir : View my order
    prixuni : Unit Price
-   en cours : Carts being processed
+   encours : Carts being processed
    noencours : No cart being processed !
 
 login : 
@@ -37,6 +37,7 @@ commande:
   quantite : Quantity
   prixuni : Unit Price
   user: User
+  nocommande: No orders
   
 
 

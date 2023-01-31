@@ -1,5 +1,5 @@
 {% if contenu_paniers|length > 0 %}
-        <table class="table">
+    <table class="table">
         <thead>
           <tr>
                 {% if super_admin or commande %}
@@ -25,39 +25,44 @@
       <tbody>
           {% for contenu_panier in contenu_paniers %}
               <tr>
-                    {% if super_admin  or commande %}
+                    {% if super_admin or commande %}
                         <th>#{{ contenu_panier.id }}</th>
                         {% if super_admin %}
                             <td>{{ contenu_panier.panier.utilisateur.email }} (#{{ contenu_panier.panier.utilisateur.id }})</td>
                         {% endif %}
                     {% endif %}
+                    {% if commande is same as false %}
                         <td class="col-md-2">
-                            {% if commande is same as false %}
                                 <img class="col-md-5" src="{{ asset('uploads/photos/' ~ contenu_panier.produit.photo) }}" title="{{contenu_panier.produit.nom}}" />
                                 <br/>
-                            {% endif %}
                             {{ contenu_panier.produit.nom }}
                         </td>
-                    {% if commande is same as false %}
                         <td>{{ contenu_panier.produit.prix }}€</td>
                         <td>{{ contenu_panier.quantite }}</td>
-                    {% endif %}
                     <td>
                         {% set montant = contenu_panier.produit.prix * contenu_panier.quantite %}
                         {{ montant }}€
                     </td>
-                    {% if commande %}
-                        <td>{{ contenu_panier.panier.dateAchat|date("d/m/Y h:i:s") }}</td>
                     {% endif %}
-                    {% if (super_admin is same as false) or (commande is same as true) %}
+                    {% if commande is same as true %}
+                        <td>{{ contenu_panier.dateAchat|date("d/m/Y h:i:s") }}</td>
+                    {% endif %}
+                    {% if (super_admin is same as false) %}
                         <td>
-                            {% if contenu_panier.panier.etat is same as true %}
+                            {% if contenu_panier.panier.etat is defined and contenu_panier.panier.etat is same as true %}
                                 <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.panier.id}) }}">{{ 'panier.voir'|trans }}</a>
                             {% else %}
                                     {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
                             {% endif %}
                         </td>
                     {% endif %}
+                        <td>
+                             {% if (commande is same as true) %}
+                                <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.id}) }}">{{ 'panier.voir'|trans }}</a>
+                            {% else %}
+                                    {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
+                            {% endif %}
+                        </td>
               </tr>
           {% endfor %}
       </tbody>
@@ -65,7 +70,7 @@
         {% if super_admin %}
             <p class="bg-warning text-center">{{ 'commande.noencours'|trans }}</p>
         {% else %}
-            <p class="text text-center">{{ 'commande.vide'|trans }}</p>
+            <p class="text text-center">{{ 'panier.vide'|trans }}</p>
         {% endif %}
     {% endif %}
 </table>

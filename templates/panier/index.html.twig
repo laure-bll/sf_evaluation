@@ -7,7 +7,7 @@
     <br/>
 
     <h3>{{ 'title.histo'|trans }}</h3>
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true }) }}
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true, display_action: false }) }}
 
-    {{ include('utilisateur/show.html.twig', {'utilisateur': utilisateur}) }}    
+    {{ include('utilisateur/show.html.twig', {'utilisateur': utilisateur}) }}
 {% endblock %}

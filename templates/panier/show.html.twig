@@ -18,5 +18,5 @@
     </p>
     <br/>
 
-    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: panier.contenuPaniers, display_action: false }) }}
+    {{ include ("contenu_panier/list.html.twig", { contenu_paniers: panier.contenuPaniers, super_admin: false, commande: false, display_action: false }) }}
 {% endblock %}

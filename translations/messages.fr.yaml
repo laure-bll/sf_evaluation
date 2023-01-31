@@ -17,14 +17,14 @@ produit:
    supprimer : Supprimer
 
 panier:
-   panier : Ajouter au panier
-   produits : Produits dans votre panier
-   vide: Votre panier est vide !
-   pay : Procéder au paiment
-   voir : Voir commande
-   prixuni : Prix unitaire
-   encours : Paniers en cours de traitement
-   noencours : Aucun panier en cours !
+  panier : Ajouter au panier
+  produits : Produits dans votre panier
+  vide: Votre panier est vide !
+  pay : Procéder au paiment
+  voir : Voir commande
+  prixuni : Prix unitaire
+  encours : Paniers en cours de traitement
+  noencours : Aucun panier en cours !
 
 login : 
    connecte : Tu es connecté(e) en tant que
@@ -37,6 +37,7 @@ commande:
   quantite : Quantité
   prixuni : Prix unitaire
   user: Utilisateur
+  nocommande: Aucune commande
 
 
 
