@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Produit{% endblock %}
+{% block title %}{{ 'produit.edit'|trans }}{% endblock %}
 
 {% block body %}
     <br/>
     <div>
         <p>
-            <a class="text-primary" href="{{ path('app_produit_index') }}">Produits</a> > 
-            <a class="text-primary" href="{{ path('app_produit_show', {'id': produit.id}) }}">{{ produit.nom }}</a> > Modifier
+            <a class="text-primary" href="{{ path('app_produit_index') }}">{{ 'produit.show'|trans }}</a> > 
+            <a class="text-primary" href="{{ path('app_produit_show', {'id': produit.id}) }}">{{ produit.nom }}</a> > {{ 'produit.modif'|trans }}
         </p>
     </div>
 

@@ -3,19 +3,19 @@
         <thead>
           <tr>
                 {% if super_admin or commande %}
-                    <th>Numéro</th>
+                    <th>{{ 'commande.numero'|trans }}</th>
                     {% if super_admin %}
-                        <th>Utilisateur (ID)</th>
+                        <th>{{ 'commande.user'|trans }} (ID)</th>
                     {% endif %}
                 {% endif %}
-                <th>Produits</th>
+                <th>{{ 'commande.produits'|trans }}</th>
                 {% if commande is same as false %}
-                    <th>Prix unitaire</th>
-                    <th>Quantité</th>
+                    <th>{{ 'commande.prixuni'|trans }}</th>
+                    <th>{{ 'commande.numero'|trans }}</th>
                 {% endif %}
-                <th>Montant total</th>
+                <th>{{ 'commande.total'|trans }}</th>
                 {% if commande %}
-                    <th>Date d'achat</th>
+                    <th>{{ 'commande.date'|trans }}</th>
                 {% endif %}
                 {% if super_admin is same as false or (commande is same as true) %}
                     <th>Action</th>
@@ -52,7 +52,7 @@
                     {% if (super_admin is same as false) or (commande is same as true) %}
                         <td>
                             {% if contenu_panier.panier.etat is same as true %}
-                                <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.panier.id}) }}">Voir la commande</a>
+                                <a class="btn btn-primary mr-2" href="{{ path('app_panier_show', {'id': contenu_panier.panier.id}) }}">{{ 'panier.voir'|trans }}</a>
                             {% else %}
                                     {{ include('contenu_panier/_delete_form.html.twig', {'id': contenu_panier.id}) }}
                             {% endif %}
@@ -63,9 +63,9 @@
       </tbody>
     {% else %}
         {% if super_admin %}
-            <p class="bg-warning text-center">Aucun panier en cours !</p>
+            <p class="bg-warning text-center">{{ 'commande.noencours'|trans }}</p>
         {% else %}
-            <p class="text text-center">Votre panier est vide !</p>
+            <p class="text text-center">{{ 'commande.vide'|trans }}</p>
         {% endif %}
     {% endif %}
 </table>

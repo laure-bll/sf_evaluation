@@ -15,7 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+
+#[Route('{_locale}')]
 class ContenuPanierController extends AbstractController
 {
     #[Route('/contenu/panier', name: 'app_contenu_panier_index', methods: ['GET'])]
@@ -45,7 +48,7 @@ class ContenuPanierController extends AbstractController
 
         $updateContenuPanier = null;
 
-        // todo : limiter la quantite selon le stock du produit
+        
         foreach($panier->getContenuPaniers() as $contenu) {
             if($contenu->getProduit() === $produit) {
                 $updateContenuPanier = $contenu;
@@ -72,11 +75,12 @@ class ContenuPanierController extends AbstractController
     }
 
     #[Route('/contenu/panier/{id}', name: 'app_contenu_panier_delete', methods: ['POST'])]
+
     public function delete($id, Request $request, ContenuPanier $contenuPanier, ContenuPanierRepository $contenuPanierRepository): Response
-    {
+    { 
+        //bouton delete pour supprimer un produit d'un panier
         if ($this->isCsrfTokenValid('delete'.$contenuPanier->getId(), $request->request->get('_token'))) {
            $contenuPanierRepository->remove($contenuPanier, true);
-          // dd($contenuPanier);
         }
 
         return $this->redirectToRoute('app_contenu_panier_index', [], Response::HTTP_SEE_OTHER);
@@ -85,12 +89,14 @@ class ContenuPanierController extends AbstractController
     #[Route('/contenu/panier/{id}/buy', name: 'app_contenu_panier_buy', methods: ['PUT','GET'])]
     public function buy(int $id, Request $request, EntityManagerInterface $em): Response
     {
+
         $panier = $em->getRepository(Panier::class)->find($id);
         $contenuPersist = null;
         foreach($panier->getContenuPaniers() as $contenu) {
-            // dd($contenu);
+            // Décrementation du stock en faisant la différence entre le stock et la quantité lors de l'achat
             $quantite =  $contenu->getQuantite();
             $stock = $contenu->getProduit()->getStock();
+
             if($stock - $quantite >= 0) {
                 $contenu->getProduit()->setStock($stock - $quantite);
                 $contenuPersist = $em->persist($contenu);
@@ -99,7 +105,7 @@ class ContenuPanierController extends AbstractController
                 return $this->redirectToRoute('app_contenu_panier_index', ['error' => $error], Response::HTTP_SEE_OTHER);
             }
         }
-
+           // mise à jour de l'etat du panier
         $panier->setEtat(true);
         $panier->setDateAchat(new DateTime());
         $em->persist($contenu);
@@ -107,4 +113,11 @@ class ContenuPanierController extends AbstractController
 
         return $this->redirectToRoute('app_contenu_panier_index',[], Response::HTTP_SEE_OTHER);
     }
+
+
+
+  
+
+
+
 }

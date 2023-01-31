@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mes informations{% endblock %}
+{% block title %}{{ 'title.info'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Mes informations</h1>
+    <h1>{{ 'title.info'|trans }}</h1>
 
-    <p><a class="btn-link" href="{{ path('app_panier_index') }}">Mon espace</a> > Modifier mes informations</p>
+    <p><a class="btn-link" href="{{ path('app_panier_index') }}">{{ 'title.espace'|trans }}</a> > {{ 'form.edit'|trans }}</p>
 
     {{ form_start(form) }}
       {{ form_widget(form) }}
       <br/>
-      <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+      <button class="btn">{{ button_label|default('form.sauvegarder'|trans) }}</button>
     {{ form_end(form) }}
 {% endblock %}

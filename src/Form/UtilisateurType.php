@@ -13,8 +13,8 @@ class UtilisateurType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('nom')
-            ->add('prenom')
+            ->add('nom', null, ['label' => 'form.nom'])
+            ->add('prenom', null, ['label' => 'form.prenom'])
         ;
     }
 

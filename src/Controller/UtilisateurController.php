@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+#[Route('{_locale}')]
 class UtilisateurController extends AbstractController
 {
     #[Route('/super/admin/utilisateur/{id}/edit', name: 'app_role_edit', methods: ['POST'])]

@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Produit{% endblock %}
+{% block title %}{{ 'produit.new'|trans }}{% endblock %}
 
 {% block body %}
     <br/>
     <div>
         <p>
-            <a class="text-primary" href="{{ path('app_produit_index') }}">Produits</a> > Créer un produit
+            <a class="text-primary" href="{{ path('app_produit_index') }}">{{ 'produit.show'|trans }}</a> > {{ 'produit.creer'|trans }}
         </p>
     </div>
 

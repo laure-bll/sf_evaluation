@@ -9,7 +9,7 @@
  <link rel="stylesheet" href="{{ asset('/css/style2.css') }}">
     <div class="product">
         <p>
-            <a class="text-primary" href="{{ path('app_produit_index') }}">Produits</a> > {{ produit.nom }}
+            <a class="text-primary" href="{{ path('app_produit_index') }}">{{ 'produit.show'|trans }}</a> > {{ produit.nom }}
         </p>
 
         {% if is_granted("ROLE_ADMIN") %}
@@ -40,16 +40,18 @@
                 <p class="quantity">STOCK : {{produit.stock}} </p>
             </div>
         </div>
-        
+
         <div class="footer">
             <div class="left">
                 <p id="price">{{produit.prix}} EUR</p>
             </div>
-            
+
             {% if app.user and produit.stock > 0 %}
-                <div class="form-quantite">
-                    {{ include('contenu_panier/_form.html.twig', {form:form_contenu_panier})  }}
-                </div>
+
+                 <div class="form-quantite">
+
+                     {{ include('contenu_panier/_form.html.twig', {form:form_contenu_panier, })  }}   
+                </div> 
             {% endif %}
         </div>
     </div>

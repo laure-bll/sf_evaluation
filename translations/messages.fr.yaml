@@ -1,0 +1,66 @@
+photo:
+  incorrect: Erreur dans le choix du format
+
+
+produit: 
+   decouvrir : Decouvrez nos produits
+   creer: Créer un nouveau produit 
+   voir: Voir produit
+   modif: Modifier produit
+   show: Produits
+   produit: Produit
+   prixuni : Prix unitaire
+   edit: Modifier produit
+   quantite: Quantité
+   soustotal : Sous-total
+   sauvegarder: Sauvegarder
+   supprimer : Supprimer
+
+panier:
+   panier : Ajouter au panier
+   produits : Produits dans votre panier
+   vide: Votre panier est vide !
+   pay : Procéder au paiment
+   voir : Voir commande
+   prixuni : Prix unitaire
+   encours : Paniers en cours de traitement
+   noencours : Aucun panier en cours !
+
+login : 
+   connecte : Tu es connecté(e) en tant que
+
+commande: 
+  numero: Numéro
+  produits : Produits
+  total : Total
+  date : Date de paiement 
+  quantite : Quantité
+  prixuni : Prix unitaire
+  user: Utilisateur
+
+
+
+title : 
+  info : Mes informations
+  espace : Mon compte
+  histo : Mon historique de commandes
+  new : Nouveaux utilisateurs du jour
+  tableau : Tableau de bord
+  nonew : Pas de nouveaux utilisateurs aujourd'hui !
+  inscription : Veuillez-vous connecter
+  connexion : Connexion
+
+form : 
+  nom : Nom
+  prenom : Prénom
+  date : Date d'inscription
+  description : Description
+  prix : Prix
+  stock: Stock
+  photo : Photo
+  quantite : Quantité
+  edit : Modifier mes informations personnelles
+  sauvegarder: Sauvegarder
+  role : Rôle
+  mdp : Mot de passe
+  inscription : Veuillez-vous inscrire

@@ -1,5 +1,5 @@
 {% block body %}
-    <h3>Mes informations</h3>
+    <h3>{{ 'title.info'|trans }}</h3>
     <br/>
 
     <table class="table">
@@ -9,17 +9,17 @@
                 <td>{{ utilisateur.email }}</td>
             </tr>
             <tr>
-                <th>Prénom</th>
+                <th>{{ 'form.prenom'|trans }}</th>
                 <td>{{ utilisateur.prenom }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
+                <th>{{ 'form.nom'|trans }}</th>
                 <td>{{ utilisateur.nom }}</td>
             </tr>
         </tbody>
     </table>
 
     <button class="btn btn-secondary">
-        <a href="{{ path('app_utilisateur_update', {id: utilisateur.id}) }}">Modifier mes informations</a>
+        <a href="{{ path('app_utilisateur_update', {id: utilisateur.id}) }}">{{ 'form.edit'|trans }}</a>
     </button>
 {% endblock %}

@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_contenu_panier_add', {'id': contenu_panier.id}) }}" onsubmit="return confirm('Are you sure you wanna add this product in your cart?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('add' ~ contenu_panier.id) }}">
+    <button class="btn btn-primary" title="add">{{ 'panier.cart'|trans }}</button>
+</form>

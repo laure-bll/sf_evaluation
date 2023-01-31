@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 #[Route('/panier')]
 class PanierController extends AbstractController
 {
@@ -30,13 +31,13 @@ class PanierController extends AbstractController
     #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PanierRepository $panierRepository): Response
     {
+
         $panier = new Panier();
         $form = $this->createForm(PanierType::class, $panier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $panier->setUtilisateur($this->getUser());
-            // $panier->setDateAchat(new Datetime()); // au moment du paiement
             $panierRepository->save($panier, true);
 
             return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
@@ -51,6 +52,7 @@ class PanierController extends AbstractController
     #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
     public function show(Panier $panier): Response
     {
+            //affiche le panier de l'utilisateur
         return $this->render('panier/show.html.twig', [
             'panier' => $panier,
         ]);
@@ -59,6 +61,7 @@ class PanierController extends AbstractController
     #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Panier $panier, PanierRepository $panierRepository): Response
     {
+
         $form = $this->createForm(PanierType::class, $panier);
         $form->handleRequest($request);
 

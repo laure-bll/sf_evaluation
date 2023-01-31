@@ -5,8 +5,8 @@ namespace App\Form;
 use App\Entity\Produit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProduitType extends AbstractType
@@ -14,10 +14,10 @@ class ProduitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('description')
-            ->add('prix')
-            ->add('stock')
+        ->add('nom', null, ['label' => 'form.nom'])
+            ->add('description', null, ['label' => 'form.description'])
+            ->add('prix', null, ['label' => 'form.prix'])
+            ->add('stock', null, ['label' => 'form.stock'])
             ->add('photo', FileType::class, [
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,

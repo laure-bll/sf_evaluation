@@ -1,0 +1,67 @@
+photo:
+  incorrect: Wrong photo format
+
+
+produit: 
+   decouvrir : "Meet our products"
+   creer: Create a new product 
+   voir: View product
+   modif: Edit product
+   show: Products
+   produit: Product
+   prixuni : Unit Price
+   edit: Edit product
+   quantite: Quantity
+   soustotal : Subtotal
+   sauvegarder: Save
+   supprimer : Delete
+
+panier:
+   panier : Add to cart
+   produits : Products in your cart
+   vide: Your cart is empty !
+   pay : Proceed to payment
+   voir : View my order
+   prixuni : Unit Price
+   en cours : Carts being processed
+   noencours : No cart being processed !
+
+login : 
+   connecte : You are logged as
+
+commande: 
+  numero: Number
+  produits : Products
+  total : Total amount
+  date : Date of payment
+  quantite : Quantity
+  prixuni : Unit Price
+  user: User
+  
+
+
+
+title : 
+  info : My personal informations
+  espace : My account
+  histo : My order history
+  new : New users of the day
+  tableau : Dashboard
+  nonew : No new users today !
+  inscription : Please sign in
+  connexion : Log in
+
+form : 
+  nom : Last Name
+  prenom : First Name
+  date : Registration date
+  description : Description
+  prix : Price
+  stock: Stock
+  photo : Photo
+  quantite : Quantity
+  edit : Edit my personal informations
+  sauvegarder: Save
+  role : Role
+  mdp : Password
+  inscription : Sign in

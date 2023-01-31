@@ -5,11 +5,11 @@
 {% block body %}
 
  <link rel="stylesheet" href="{{ asset('/css/style1.css') }}">
-    <h1 class="text text-center">Shop our products</h1>
+    <h1 class="text text-center">{{ 'produit.decouvrir'|trans }}</h1>
     <div>
         {% if is_granted("ROLE_ADMIN") %}
             <p class="text-center">
-                <a class="btn btn-link" href="{{ path('app_produit_new') }}">Créer un nouveau produit</a>
+                <a class="btn btn-link" href="{{ path('app_produit_new') }}">{{ 'produit.creer'|trans }}</a>
             </p>
         {% endif %}
     </div>
@@ -37,9 +37,9 @@
                             </div>
                             <div class="d-flex">
                                 <p>
-                                    <a class="btn btn-primary mr-2" href="{{ path('app_produit_show', {'id': produit.id}) }}">Voir le produit</a>
+                                    <a class="btn btn-primary mr-2" href="{{ path('app_produit_show', {'id': produit.id}) }}">{{ 'produit.voir'|trans }}</a>
                                     {% if is_granted("ROLE_ADMIN") %}
-                                        <a class="btn btn-secondary" href="{{ path('app_produit_edit', {'id': produit.id}) }}">Modifier</a>
+                                        <a class="btn btn-secondary" href="{{ path('app_produit_edit', {'id': produit.id}) }}">{{ 'produit.modif'|trans }}</a>
                                     {% endif %}
                                 </p>
                             </div>

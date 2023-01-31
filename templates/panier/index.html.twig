@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte{% endblock %}
+{% block title %}{{ 'title.espace'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="text text-center">Mon compte</h1>
+    <h1 class="text text-center">{{ 'title.espace'|trans }}</h1>
     <br/>
 
-    <h3>Historique de mes commandes</h3>
+    <h3>{{ 'title.histo'|trans }}</h3>
     {{ include ("contenu_panier/list.html.twig", { contenu_paniers: paniers, super_admin: false, commande: true }) }}
 
     {{ include('utilisateur/show.html.twig', {'utilisateur': utilisateur}) }}    

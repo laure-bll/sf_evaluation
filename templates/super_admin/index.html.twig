@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tableau de bord{% endblock %}
+{% block title %}{{ 'title.tableau'|trans }}{% endblock %}
 
 {% block body %}
 <style>
@@ -9,24 +9,24 @@
 </style>
 
 <div class="wrapper-dashboard">
-    <h1 class="text-center">Tableau de bord</h1>
+    <h1 class="text-center">{{ 'title.tableau'|trans }}</h1>
 
-    <h3>Paniers en cours</h3>
+    <h3>{{ 'panier.encours'|trans }}</h3>
 
     {{ include ("contenu_panier/list.html.twig", { contenu_paniers: unpaid_paniers, super_admin: true, commande: false }) }}
 
-    <h3>Nouveaux utilisateurs du jour</h3>
+    <h3>{{ 'title.new'|trans }}</h3>
 
     {% if utilisateurs|length > 0 %}
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Prénom</th>
-                <th>Nom</th>
+                <th>{{ 'form.prenom'|trans }}</th>
+                <th>{{ 'form.nom'|trans }}</th>
                 <th>Email</th>
-                <th>Date d'arrivée</th>
-                <th>Rôle</th>
+                <th>{{ 'form.date'|trans }}</th>
+                <th>{{ 'form.role'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -62,7 +62,7 @@
             {% endfor %}
         </tbody>
     {% else %}
-        <p class="text text-center">Pas de nouveaux utilisateurs aujourd'hui !</p>
+        <p class="text text-center">{{ 'title.nonew'|trans }}</p>
     {% endif %}
     </table>
 </div>

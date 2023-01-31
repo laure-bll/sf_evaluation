@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class SuperAdminController extends AbstractController
 {
     #[Route('/super/admin', name: 'app_super_admin')]

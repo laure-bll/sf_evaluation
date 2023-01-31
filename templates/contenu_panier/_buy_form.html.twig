@@ -4,5 +4,5 @@
 
 <form method="put" action="{{ path('app_contenu_panier_buy', {'id': contenu_paniers[0].panier.id}) }}" onsubmit="return confirm('Êtes vous sur de vouloir valider votre panier?');">
     <input type="hidden" name="_token" value="{{ csrf_token('buy' ~ contenu_paniers[0].panier.id) }}">
-   <button class="checkout-cta">PROCEDER AU PAIEMENT</button>
+   <button class="checkout-cta">{{ 'panier.pay'|trans }}</button>
 </form>

@@ -138,6 +138,6 @@ class Produit
     }
 
     public function __toString(): string {
-        return $this->nom;
+        return $this->stock;
     }
 }
